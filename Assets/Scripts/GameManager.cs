@@ -6,6 +6,7 @@ using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.SceneManagement;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -14,10 +15,27 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private TextMeshProUGUI pingText;
+
+    [SerializeField] private GameObject StartButton;
+
+    private float SpawnPointX = 25;
+    
+    static GameManager manager = null;
     
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
+
+        if (manager == null)
+        {
+            manager = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 
     public override void OnConnectedToMaster()
@@ -32,6 +50,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Joined the Lobby");
         text.text = "Status: " + "Joined the Lobby";
+        
+        StartButton.SetActive(true);
     }
 
     public override void OnJoinedRoom()
@@ -39,7 +59,7 @@ public class GameManager : MonoBehaviourPunCallbacks
        Debug.Log("Joined the " + PhotonNetwork.CurrentRoom);
        text.text = "Status: " + "Joined the " + PhotonNetwork.CurrentRoom;
 
-       PhotonNetwork.Instantiate("Cube", Vector3.zero, Quaternion.identity);
+       PhotonNetwork.Instantiate("OldCar", new Vector3(SpawnPointX - PhotonNetwork.CountOfPlayersInRooms * 5,0,0), Quaternion.identity);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -72,13 +92,25 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void enterRoom()
     {
-        PhotonNetwork.JoinOrCreateRoom("room1", new RoomOptions(), TypedLobby.Default);
+        if (PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.JoinOrCreateRoom("room1", new RoomOptions(), TypedLobby.Default);
+            SceneManager.LoadScene("GameScene");
+        }
     }
 
     private void Update()
     {
-        countText.text = "There is a " + PhotonNetwork.CountOfRooms + " room & " + PhotonNetwork.CountOfPlayersOnMaster + " players are online";
+        if (countText != null)
+        {
+            countText.text = "There is a " + PhotonNetwork.CountOfRooms + " room & " + PhotonNetwork.CountOfPlayersOnMaster + " players are online";
 
-        pingText.text = "Ping: " + PhotonNetwork.GetPing();
+        }
+
+        if (pingText != null)
+        {
+            pingText.text = "Ping: " + PhotonNetwork.GetPing();
+        }
+
     }
 }
