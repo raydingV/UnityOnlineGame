@@ -8,6 +8,7 @@ using Photon.Pun;
 public class VehicleCamera : MonoBehaviour
 {
     [SerializeField] private Camera thisCamera;
+    [SerializeField] private AudioListener audio;
     private PhotonView view;
     
     public Transform target;
@@ -221,6 +222,7 @@ public class VehicleCamera : MonoBehaviour
         if (!view.IsMine)
         {
             thisCamera.enabled = false;
+            audio.enabled = false;
         }
 
     }

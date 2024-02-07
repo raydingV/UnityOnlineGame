@@ -6794,7 +6794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  m_SynchronizeScale: 1
   m_UseLocal: 1
 --- !u!114 &3140743312576279708
 MonoBehaviour:
@@ -12573,6 +12573,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 8512d52775bf95340b741dfb9552c938, type: 3}
+      propertyPath: audio
+      value: 
+      objectReference: {fileID: 1042660030408675505}
+    - target: {fileID: 11400000, guid: 8512d52775bf95340b741dfb9552c938, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 6315934757757054106}
@@ -12591,6 +12595,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1641710159517150019}
   m_SourcePrefab: {fileID: 100100000, guid: 8512d52775bf95340b741dfb9552c938, type: 3}
+--- !u!81 &1042660030408675505 stripped
+AudioListener:
+  m_CorrespondingSourceObject: {fileID: 8100000, guid: 8512d52775bf95340b741dfb9552c938, type: 3}
+  m_PrefabInstance: {fileID: 1042660030416570385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1042660030415162513 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2000000, guid: 8512d52775bf95340b741dfb9552c938, type: 3}
